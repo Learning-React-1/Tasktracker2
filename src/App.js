@@ -39,12 +39,51 @@ function App() {
     console.log('changeshowinput clicked');
     setShowInput((input)=>{return !input})
   }
+  function changereminder(taskid){
+    setAllTasks(
+      (prevtasks)=>{
+        let clonedtasks=prevtasks.map(item=> {return {...item}})
+        return clonedtasks.map((task)=>{
+            if(task.id===taskid){
+              task.reminder=!task.reminder;
+              return task;
+            }
+            else{
+              return task;
+            }
+        })
+      }
+    )
+    }
+  function addtask(currtask,currdate,currreminder){
+    setAllTasks((prevalltasks)=>{
+      let tempid=Math.random()*1000000;
+      let objecttoadd={id:tempid,task:currtask,date:currdate,reminder:currreminder}
+      let clonedtasks=prevalltasks.map((task)=>{return {...task}})
+      clonedtasks.push(objecttoadd);
+      return clonedtasks;
+    }
+      
+    )
+    
+  }
+  function deletetask(id){
+
+    setAllTasks((prevalltasks)=>{
+      let clonedtasks=alltasks.map((task)=>{return {...task}})
+
+      return clonedtasks.filter((currtask)=>{
+        return currtask.id!==id;
+      });
+      
+    })
+  }
   /****************************************************************** */
   return (
     <div className="App">
       <Header changeshowinput={changeshowinput}></Header>
-      {showinput ? <Input></Input>: <span></span>}
-      <TaskList alltasks={alltasks}></TaskList>
+      {showinput ? <Input addtask={addtask}></Input>: <span></span>}
+      <TaskList alltasks={alltasks} changereminder={changereminder} deletetask={deletetask}></TaskList>
       
     </div>
   );

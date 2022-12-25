@@ -1,17 +1,16 @@
 import Task from './Task.js'
-function TaskList({alltasks}){
+import './TaskList.css'
+function TaskList({alltasks,changereminder,deletetask}){
+   
+    
 return(
 <div>
     {
         alltasks.map((task)=>{
-            return <Task key={task.id} task={task.task} date={task.date} reminder={task.reminder}></Task>
+            return <Task className="task" key={task.id} id={task.id} task={task.task} date={task.date} reminder={task.reminder} deletetask={deletetask} changereminder={changereminder}/>
         })
     }
-    <Task  task="adfasdf" date="asdfaf" reminder={true}></Task>
 </div>
-
 )
-
-
 }
 export default TaskList;
